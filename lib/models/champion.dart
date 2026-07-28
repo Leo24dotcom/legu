@@ -47,6 +47,7 @@ static List<Champion> parseChampionList(String source) {
 
 List<Ability>? spells;
 Ability? passive;
+List<Skin>? skins;
 
 Future<void> fetchAbilities(String version) async {
   if (spells != null) return;
@@ -64,19 +65,63 @@ Future<void> fetchAbilities(String version) async {
       .toList();
 }
 
+
+Future<List<Skin>> fetchChampionSkins(String version) async {
+if (skins != null) return skins!;
+
+  final res = await http.get(Uri.parse(
+    'https://ddragon.leagueoflegends.com/cdn/$version/data/en_US/champion/$id.json',
+  ));
+
+  final data = jsonDecode(res.body);
+  final champData = data['data'][id];
+  final rawSkins = champData['skins'] as List;
+
+  skins = rawSkins
+      .where((s) => !(s as Map).containsKey('parentSkin')) // drop chromas
+      .map((s) => Skin.fromMap(s as Map<String, dynamic>))
+      .toList();
+
+  return skins!;
+}
+
 }
 class Ability {
   final String? id;
   final String name;
   final String description;
+  final String? image;
 
-  Ability({required this.id, required this.name, required this.description});
+  Ability({required this.id, required this.name, required this.description, required this.image});
 
   factory Ability.fromMap(Map<String, dynamic> map) {
     return Ability(
       id: map['id'] as String?,
       name: map['name'] as String,
       description: map['description'] as String,
+      image: (map['image'] as Map<String, dynamic>?)?['full'] as String?,
     );
   }
+  String? imageUrl(String version, {String group = 'spell'}) {
+    if (image == null) return null;
+    return 'https://ddragon.leagueoflegends.com/cdn/$version/img/$group/$image';
+  }
+}
+class Skin {
+  final String id;
+  final int num;
+  final String name;
+
+  Skin({required this.id, required this.num, required this.name});
+
+  factory Skin.fromMap(Map<String, dynamic> map) {
+    return Skin(
+      id: map['id'] as String,
+      num: map['num'] as int,
+      name: map['name'] as String,
+    );
+  }
+
+  String splashUrl(String championId) =>
+      'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/${championId}_$num.jpg';
 }

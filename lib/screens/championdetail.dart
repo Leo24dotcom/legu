@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:league/models/champion.dart';
 import 'package:league/screens/championselect.dart';
+import 'package:league/screens/skingallery.dart';
 
 class ChampionDetail extends StatefulWidget{
   final Champion champion;
@@ -36,7 +37,7 @@ class ChampionDetailScreen extends State<ChampionDetail> {
   Future<void> _loadAbilities() async {
       try {
     await widget.champion.fetchAbilities(widget.version);
-  } catch (e, st) {
+  } catch (e) {
     debugPrint('fetchAbilities error: $e');
   }
   if (!mounted) return;
@@ -81,7 +82,11 @@ class ChampionDetailScreen extends State<ChampionDetail> {
               MaterialPageRoute(builder: (context) => ChampSelectScreen())
               );
             }, 
-          icon: Icon(Icons.chevron_left)),
+            style: IconButton.styleFrom(
+              foregroundColor: Colors.white,
+            ),
+          icon: Icon(Icons.chevron_left)
+          ),
           Text(widget.champion.name, style: TextStyle(
             color: Colors.white, fontWeight: FontWeight.bold, fontSize: 40
           ),
@@ -116,8 +121,15 @@ class ChampionDetailScreen extends State<ChampionDetail> {
               ),
             ),
             SizedBox(height:10),
-          
-         Image.network('https://ddragon.leagueoflegends.com/cdn/img/champion/splash/${widget.champion.id}_0.jpg'),
+        GestureDetector(
+        onTap: (){
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => SkinGallery(champion: widget.champion, version: widget.version),
+            )
+          );
+        },
+         child: Image.network('https://ddragon.leagueoflegends.com/cdn/img/champion/splash/${widget.champion.id}_0.jpg'),
+         ),
          SizedBox(height:10),
          Center(
             child: Row(
@@ -129,7 +141,7 @@ class ChampionDetailScreen extends State<ChampionDetail> {
                 decorationThickness: 2,
                 fontWeight: FontWeight.bold),
                 ),
-                Text('Stats', style: TextStyle(color: Colors.white)),
+                Text('STATS', style: TextStyle(color: Colors.white)),
                 Text('SKILLS', style: TextStyle(color: Colors.white)),
               ],
             ),
@@ -178,17 +190,22 @@ class ChampionDetailScreen extends State<ChampionDetail> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+              Stack(
+                children: [
               SizedBox(
                 height:60,
                 width: 60,
-              child: TextButton(
+              child: ElevatedButton(
               onPressed: (){
               setState(() {
                 selectedAbility = ability;
                 }
               );
             },
-            style: TextButton.styleFrom(
+            style: ElevatedButton.styleFrom(
+              padding: EdgeInsets.zero,
+              minimumSize: Size.zero,
+              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
               backgroundColor: switch(keyList[index]){
                 'P' => Color(0xFF006400),
                 'Q' => Color(0xFF301934),
@@ -211,7 +228,17 @@ class ChampionDetailScreen extends State<ChampionDetail> {
                 borderRadius: BorderRadius.circular(12)
               ),    
             ),
-            child: Text(keyList[index],
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(12),
+            child: Stack(
+              fit: StackFit.expand,
+              children: [
+                Positioned.fill(
+              child: Image.network(index == 0
+              ? (ability.imageUrl(widget.version, group: 'passive') ?? '')
+              : (ability.imageUrl(widget.version) ?? ''),
+              fit: BoxFit.cover)),
+            Text(keyList[index],
             style: TextStyle(
               color: switch(keyList[index]){
                 'P' => Color(0xFF66FF00),
@@ -221,13 +248,18 @@ class ChampionDetailScreen extends State<ChampionDetail> {
                 'R' => Color(0xFF0096FF),
                 _=> Colors.grey
                 },
-            ),
-            ),
               ),
-            ),
-                ],
-            );
-            },
+            ), 
+              ],
+            ), 
+            ),         
+          ),
+        ),
+        ],
+        ),             
+      ],
+    );
+  },
             separatorBuilder: (context,index) => SizedBox(width: 5), 
             itemCount: keyList.length),
             ), if (selectedAbility != null)

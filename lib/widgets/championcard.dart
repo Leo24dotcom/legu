@@ -20,15 +20,21 @@ class Championcard extends StatelessWidget{
       child: AspectRatio(
         aspectRatio: 1/2,
       child: Container(
-        color: switch(champion.tags[0]){
+        decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [switch(champion.tags[0]){
           'Tank' => Color(0xFF4A90E2),
           'Fighter' => Color(0xFFC0392B),
           'Mage' => Color(0xFF7E57C2),
           'Marksman' => Color(0xFFD4AF37),
           'Support' => Color(0xFF27AE60),
           'Assasin' => Color(0xFF2C3E50),
-          _ => Colors.grey,
-        },
+          _ => Colors.grey}, Colors.black
+          ], stops: [0.0, 0.9]
+        ),
+        ),
         padding: const EdgeInsets.all(10),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -38,7 +44,7 @@ class Championcard extends StatelessWidget{
               'https://ddragon.leagueoflegends.com/cdn/$version/img/champion/${champion.sprite}', fit: BoxFit.cover,
             ),
             ),
-            Text(champion.name),
+            Text(champion.name, style: TextStyle(color: Colors.white)),
             SizedBox(
             height: 30,
             child: ListView.separated(
@@ -52,7 +58,8 @@ class Championcard extends StatelessWidget{
             ),
             ],
           ),
-        ),
+        
+      ),
       ),
     );
   }
