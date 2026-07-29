@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:league/models/item.dart';
 import 'package:league/widgets/championcard.dart';
 import 'package:league/services/league_model.dart';
 import 'package:league/models/champion.dart';
 import 'package:league/widgets/horizontalclasslist.dart';
 import 'package:league/screens/championdetail.dart';
+import 'package:league/screens/itemscreen.dart';
 
 class ChampSelectScreen extends StatefulWidget{
   const ChampSelectScreen({super.key});
@@ -60,6 +62,11 @@ class _ChampSelectScreenState extends State<ChampSelectScreen>{
           fontWeight: FontWeight.bold,
           ),
         ),
+      leading: TextButton(
+        onPressed: (){
+          Navigator.push(context, MaterialPageRoute(builder:(context) => ItemScreen(leagueModel: leagueModel,) ));
+        },
+        child: Text('Item Shop'),)
       ),
       body: Padding(
         padding: EdgeInsets.all(12),
@@ -77,6 +84,7 @@ class _ChampSelectScreenState extends State<ChampSelectScreen>{
           SizedBox(height:10),
           Expanded(
             child: found.isNotEmpty ? GridView.builder(
+              key: UniqueKey(),
               padding: EdgeInsets.all(12),
               gridDelegate:  const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 3,

@@ -41,7 +41,7 @@ class ChampionDetailScreen extends State<ChampionDetail> {
     debugPrint('fetchAbilities error: $e');
   }
   if (!mounted) return;
-  setState(() {});
+    setState(() {});
   }
 
   @override
@@ -85,7 +85,7 @@ class ChampionDetailScreen extends State<ChampionDetail> {
             style: IconButton.styleFrom(
               foregroundColor: Colors.white,
             ),
-          icon: Icon(Icons.chevron_left)
+            icon: Icon(Icons.chevron_left)
           ),
           Text(widget.champion.name, style: TextStyle(
             color: Colors.white, fontWeight: FontWeight.bold, fontSize: 40

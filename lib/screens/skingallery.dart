@@ -64,20 +64,19 @@ class SkinGalleryScreen extends State<SkinGallery> {
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2,
           mainAxisSpacing: 10,
           crossAxisSpacing: 10,
-          mainAxisExtent: 190,
           childAspectRatio: 1,
           ),
           itemCount: widget.champion.skins?.length,
           itemBuilder: (context,index){
-            return SizedBox(
-              height: 190,
-            child: Column(
-              children: [
+            return 
             Container(
               decoration: BoxDecoration(
                 border: Border.all(color: Color(0xFFFFD700), width: 1.0),
                 borderRadius: BorderRadius.circular(12),
               ),
+            child: Column(
+              children: [
+            Expanded(
             child: ClipRRect(
               borderRadius: BorderRadius.circular(12),
               child: Image.network('https://ddragon.leagueoflegends.com/cdn/img/champion/splash/${widget.champion.id}_${widget.champion.skins![index].num}.jpg', fit: BoxFit.cover
@@ -87,7 +86,8 @@ class SkinGalleryScreen extends State<SkinGallery> {
             widget.champion.skins![index].name != 'default' ? Text(widget.champion.skins![index].name, style: TextStyle(color: Colors.white)) : Text(widget.champion.name, style: TextStyle(color: Colors.white),),
                     ],
                   ),
-                );
+            );
+  
               }
             ),
           ),
