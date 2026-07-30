@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:league/services/league_model.dart';
 import 'package:league/models/item.dart';
 import 'package:league/widgets/itemcard.dart';
-import 'package:league/screens/championselect.dart';
+import 'package:league/widgets/verticalbuttonlist.dart';
 
 class ItemScreen extends StatefulWidget{
   final LeagueModel leagueModel;
@@ -52,9 +52,9 @@ class ItemScreenState extends State<ItemScreen> {
   @override
   Widget build(BuildContext context){
     return Scaffold(
-      backgroundColor: Color(0xFF1A1A2E),
+      backgroundColor: Colors.black,
       appBar: AppBar(
-        backgroundColor: Color(0xFF1A1A2E),
+        backgroundColor: Colors.black,
         title: Text('Item Store', style: TextStyle(
           color: Colors.white,
           fontWeight: FontWeight.bold,
@@ -67,20 +67,52 @@ class ItemScreenState extends State<ItemScreen> {
           icon: Icon(Icons.chevron_left),
           style: IconButton.styleFrom(
             foregroundColor: Colors.white,
-          ),)
+          ),),
+          shape: const Border(
+          bottom: BorderSide(
+            color: Color(0xFFFFD700),
+            width: 1.0
+          )),
+          actions: [
+            SizedBox(
+              width: 200,
+              height: 40,
+            child: SearchBar(
+            backgroundColor: WidgetStateProperty.all(Colors.black),
+            hintText: 'Search da item',
+            hintStyle: WidgetStateProperty.all(
+              const TextStyle(color: Color(0xFFFFD700))
+            ),
+            onChanged: (value) => runFilter(value),
+            leading: const Icon(Icons.search, color: Color(0xFFFFD700),),
+            shape: WidgetStatePropertyAll(
+              RoundedRectangleBorder(borderRadius: BorderRadius.zero,
+              side: BorderSide(color: Color(0xFFFFD700), width: 2))
+            )
+          ),
+            ),
+          ],
       ),
       body: Padding(
-        padding: EdgeInsets.all(12),
+        padding: EdgeInsets.only(right:12, bottom: 12, left: 12),
+        child: Row(
+          children: [
+        SizedBox(height: 12),
+        Expanded(
+        child: Verticalbuttonlist(leagueModel: widget.leagueModel),
+        ),
+        VerticalDivider(
+          color: Color(0xFFFFD700),
+          thickness: 1,
+          width: 20,
+        ),
+        Expanded(
+          flex: 5,
         child: ListenableBuilder(
           listenable: widget.leagueModel, 
           builder: (context, _) => Column(
           children: [
-          SearchBar(
-            hintText: 'Search da champion',
-            onChanged: (value) => runFilter(value),
-            leading: const Icon(Icons.search)
-          ),
-          SizedBox(height: 10),
+          SizedBox(height: 12,),
           Expanded(
             child: found.isNotEmpty ? ListView.separated(
               key: UniqueKey(),
@@ -94,6 +126,9 @@ class ItemScreenState extends State<ItemScreen> {
           ),
           ]
         ),
+        ),
+        ),
+          ],
         ),
       ),
     );

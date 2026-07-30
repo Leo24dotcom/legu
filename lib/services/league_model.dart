@@ -7,7 +7,7 @@ import 'package:league/models/item.dart';
 
 class LeagueModel extends ChangeNotifier{
   String selectedType = 'All';
-  String selectedItemType = 'All';
+  ItemRarity? selectedItemType;
   bool isLoading = true;
   String? error;
   List<Champion> champions = [];
@@ -20,6 +20,7 @@ class LeagueModel extends ChangeNotifier{
     champions = await fetchChampionList(version!);
     items = (await fetchItems(version!))
         .where((item) => item.isOnSummonersRift)
+        .where((item) => item.isPurchasable)
         .toList();
     notifyListeners();
     } catch (e) {
@@ -90,15 +91,15 @@ class LeagueModel extends ChangeNotifier{
         .map((entry) => Item.fromMap(entry.key, entry.value as Map<String, dynamic>))
         .toList();
   }
-  void selectItemCategory(String type) {
+  void selectItemCategory(ItemRarity? type) {
     selectedItemType = type;
     notifyListeners();
   }
 
   List<Item> get filteredItem {
-    if (selectedType == 'All') return items;
-    return items
-        .where((c) => c.tags.contains(selectedItemType))
-        .toList();
+    if (selectedItemType == null) return items;
+      return items
+      .where((i) => i.rarity == selectedItemType)
+      .toList();
   }
 }

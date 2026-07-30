@@ -7,6 +7,28 @@ class ItemCard extends StatelessWidget{
 
   const ItemCard({super.key, required this.item, required this.version});
 
+  String parseItemDescription(String rawHtml) {
+  var text = rawHtml;
+
+  // Convert line-break-like tags into actual newlines first
+  text = text.replaceAll(RegExp(r'<br\s*/?>', caseSensitive: false), '\n');
+
+  // Strip all remaining tags (attention, mainText, stats, passive, etc.)
+  text = text.replaceAll(RegExp(r'<[^>]+>'), '');
+
+  // Decode common HTML entities Riot uses
+  text = text
+      .replaceAll('&nbsp;', ' ')
+      .replaceAll('&amp;', '&')
+      .replaceAll('&lt;', '<')
+      .replaceAll('&gt;', '>');
+
+  // Collapse excess blank lines/spaces
+  text = text.replaceAll(RegExp(r'\n{3,}'), '\n\n').trim();
+
+  return text;
+}
+
   @override
   Widget build(BuildContext context){
     return Container(
@@ -21,12 +43,18 @@ class ItemCard extends StatelessWidget{
         children: [
           Image.network('https://ddragon.leagueoflegends.com/cdn/$version/img/item/${item.sprite}'),
           SizedBox(width:10),
-          Text(item.name, style: TextStyle(color: Colors.white)),
-          SizedBox(width: 10,),
-          Text('${item.total} gold', style: TextStyle(color: Colors.white),),
-          SizedBox(width:5),
           Expanded(
-          child: Text(item.description.replaceAll(RegExp(r'<[^>]*>'),''), style: TextStyle(color: Colors.white), softWrap: true,),),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+          Text(item.name, style: TextStyle(color: Colors.white)),
+          
+          Text(parseItemDescription(item.description), style: TextStyle(color: Colors.white), softWrap: true,),
+            ],
+          ),
+          ),
+          SizedBox(width:15),
+          Text('${item.total} gold', style: TextStyle(color: Colors.white),),
         ],
       ),
     );
