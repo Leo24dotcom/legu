@@ -5,10 +5,10 @@ import 'package:league/models/item.dart';
 
 const List<ItemRarity?> categories = [
   null,
-  ItemRarity.starter,
+  ItemRarity.start,
   ItemRarity.basic,
   ItemRarity.epic,
-  ItemRarity.legendary,
+  ItemRarity.leg,
 ];
 
 String labelFor(ItemRarity? rarity) {
@@ -29,7 +29,8 @@ class Verticalbuttonlist extends StatelessWidget{
         itemCount: categories.length,
         itemBuilder: (context, index){
           final rarity = categories[index];
-          return AspectRatio(
+          final isSelected = rarity == leagueModel.selectedItemType;
+         return AspectRatio(
             aspectRatio: 1,
           child: ElevatedButton(
             onPressed: (){
@@ -38,10 +39,11 @@ class Verticalbuttonlist extends StatelessWidget{
             style: ElevatedButton.styleFrom(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
-              )
+              ),
+              backgroundColor: isSelected ? Color(0x80FFFFE0) : Colors.black
             ),
             child: Text(labelFor(rarity), maxLines: 1, softWrap: false,
-            style: TextStyle(fontSize: 10),),
+            style: TextStyle(fontSize: 8, color: Color(0xFFFFD700)),),
           ),
           );
         }

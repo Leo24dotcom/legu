@@ -54,7 +54,14 @@ class ItemCard extends StatelessWidget{
           ),
           ),
           SizedBox(width:15),
-          Text('${item.total} gold', style: TextStyle(color: Colors.white),),
+          Container(
+            padding: const EdgeInsets.all(4),
+            decoration: BoxDecoration(
+              border: Border.all(color: Color(0xFFFFD700)),
+              borderRadius: BorderRadius.circular(12),
+            ),
+          child: Text('${item.total} gold', style: TextStyle(color: Color(0xFFFFD700)),),
+          ),
         ],
       ),
     );

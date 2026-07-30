@@ -56,7 +56,9 @@ class ItemScreenState extends State<ItemScreen> {
       appBar: AppBar(
         backgroundColor: Colors.black,
         title: Text('Item Store', style: TextStyle(
-          color: Colors.white,
+          color: Color(0xFFFFD700),
+          decoration: TextDecoration.underline,
+          decorationColor: Color(0xFFFFD700),
           fontWeight: FontWeight.bold,
           ),
         ),
@@ -67,7 +69,8 @@ class ItemScreenState extends State<ItemScreen> {
           icon: Icon(Icons.chevron_left),
           style: IconButton.styleFrom(
             foregroundColor: Colors.white,
-          ),),
+          ),
+          ),
           shape: const Border(
           bottom: BorderSide(
             color: Color(0xFFFFD700),
@@ -75,12 +78,15 @@ class ItemScreenState extends State<ItemScreen> {
           )),
           actions: [
             SizedBox(
-              width: 200,
+              width: 120,
               height: 40,
             child: SearchBar(
             backgroundColor: WidgetStateProperty.all(Colors.black),
-            hintText: 'Search da item',
+            hintText: 'Search',
             hintStyle: WidgetStateProperty.all(
+              const TextStyle(color: Color(0xFFFFD700))
+            ),
+            textStyle: WidgetStateProperty.all(
               const TextStyle(color: Color(0xFFFFD700))
             ),
             onChanged: (value) => runFilter(value),

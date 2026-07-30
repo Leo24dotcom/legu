@@ -2,10 +2,10 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 enum ItemRarity{
-  starter,
+  start,
   basic,
   epic,
-  legendary,
+  leg,
 }
 
 class Item {
@@ -69,8 +69,8 @@ class Item {
   bool get isStarterItem => _starterItemIds.contains(id);
 
   ItemRarity get rarity {
-    if (isStarterItem) return ItemRarity.starter;
-    if (total >= 2500) return ItemRarity.legendary;
+    if (isStarterItem) return ItemRarity.start;
+    if (total >= 2500) return ItemRarity.leg;
     if (total >= 1000) return ItemRarity.epic;
     return ItemRarity.basic;
   }

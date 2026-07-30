@@ -36,11 +36,11 @@ class HorizontalButtonList extends StatelessWidget {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(30),
                 ),
-                backgroundColor: isSelected ?Colors.grey : Color(0xFF1A1A2E)
+                backgroundColor: isSelected ?Color(0xFFFFD700) : Colors.black
               ),
               child: Text(Categories[index],
               style: TextStyle(
-                color: Colors.white,
+                color: isSelected ? Colors.black: Color(0xFFFFD700),
               ))
               )
             );

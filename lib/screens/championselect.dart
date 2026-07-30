@@ -19,6 +19,8 @@ class _ChampSelectScreenState extends State<ChampSelectScreen>{
 
   List<Champion> list = [];
   List<Champion> found = [];
+  String type = '';
+  final SearchController searchController = SearchController();
   @override
   void initState(){
     super.initState();
@@ -33,6 +35,7 @@ class _ChampSelectScreenState extends State<ChampSelectScreen>{
   }
 
   void runFilter(String enteredKeyword) {
+    type = enteredKeyword;
     List<Champion> results = [];
     if(enteredKeyword.isEmpty){
       results = list;
@@ -48,25 +51,38 @@ class _ChampSelectScreenState extends State<ChampSelectScreen>{
   void dispose() {
     leagueModel.removeListener(sync);
     leagueModel.dispose();
+    searchController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context){
     return Scaffold(
-      backgroundColor: Color(0xFF1A1A2E),
+      backgroundColor: Colors.black,
       appBar: AppBar(
-        backgroundColor: Color(0xFF1A1A2E),
+        backgroundColor: Colors.black,
         title: Text('Champion Select', style: TextStyle(
-          color: Colors.white,
+          color: Color(0xFFFFD700),
           fontWeight: FontWeight.bold,
           ),
         ),
-      leading: TextButton(
+      leadingWidth: 85,
+      leading: ElevatedButton(
         onPressed: (){
           Navigator.push(context, MaterialPageRoute(builder:(context) => ItemScreen(leagueModel: leagueModel,) ));
         },
-        child: Text('Item Shop'),)
+        style: ElevatedButton.styleFrom(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              backgroundColor: Colors.black,
+              side: const BorderSide(
+                color: Color(0xFFFFD700),
+                width: 2.0,
+              )
+            ),
+        child: Text('Item Shop', style: TextStyle(color: Color(0xFFFFD700)),),
+        ),
       ),
       body: Padding(
         padding: EdgeInsets.all(12),
@@ -76,8 +92,20 @@ class _ChampSelectScreenState extends State<ChampSelectScreen>{
           children: [
           SearchBar(
             hintText: 'Search da champion',
+            controller: searchController,
             onChanged: (value) => runFilter(value),
-            leading: const Icon(Icons.search)
+            leading: const Icon(Icons.search, color: Color(0xFFFFD700),),
+            backgroundColor: WidgetStateProperty.all(Colors.black),
+            hintStyle: WidgetStateProperty.all(
+              const TextStyle(color: Color(0xFFFFD700))
+            ),
+            textStyle: WidgetStateProperty.all(
+              const TextStyle(color: Color(0xFFFFD700))
+            ),
+            shape: WidgetStatePropertyAll(
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20),
+              side: BorderSide(color: Color(0xFFFFD700), width: 2))
+            )
           ),
           SizedBox(height: 10),
           HorizontalButtonList(leagueModel: leagueModel),

@@ -64,7 +64,7 @@ class SkinGalleryScreen extends State<SkinGallery> {
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2,
           mainAxisSpacing: 10,
           crossAxisSpacing: 10,
-          childAspectRatio: 1,
+          childAspectRatio: 16/9,
           ),
           itemCount: widget.champion.skins?.length,
           itemBuilder: (context,index){
