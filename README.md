@@ -1,4 +1,54 @@
 # league
 
-A new Flutter project.
+A League of Legends library containing information about champions, skins and items in the current version of the game.
+
+|Champion Select|Champion Detail|
+| --------------|---------------|
+|<img width="492" height="820" alt="Screenshot 2026-07-30 at 4 45 19 PM" src="https://github.com/user-attachments/assets/1c9a3199-b53a-484f-a6c6-5c15b8fe9c29" />| <img width="492" height="820" alt="Screenshot 2026-07-30 at 5 02 16 PM" src="https://github.com/user-attachments/assets/3d190b4a-8b6d-4b0d-a7b1-31ef47481a26" />|
+
+|Skin Gallery|Item Shop|
+|------------|---------|
+|<img width="491" height="826" alt="Screenshot 2026-07-30 at 5 08 01 PM" src="https://github.com/user-attachments/assets/ac25b3b4-1620-4d99-9517-11463b6106c0" />| <img width="496" height="829" alt="Screenshot 2026-07-30 at 5 09 08 PM" src="https://github.com/user-attachments/assets/1fb83518-cacf-4d65-8536-ba8a8804de6e" />|
+
+<br>
+
+Team Size: Me(1)
+
+<br>
+
+Development Period: 7/23/26-7/30/26 1 week
+<br>
+
+Development Environment:
+<br>
+
+|Framework|Architecture|
+|---------|------------|
+|Flutter|MVVM|
+
+<br>
+
+Core Features
+<br>
+
+- List of every champion in the game
+- Detail screen containing lore and ability descriptions
+- List of every skin for said champion
+- List of every item and their stats and abilities
+
+<br>
+
+Troubleshooting
+- Search Bar issues
+  - Situation
+    - Search bar filter not working when switching class tabs
+    - When switching tabs, the filter would not be applied
+  - Root Cause analysis
+    - Would instantiate found list to the overall list every time search bar was used
+  - Solution
+    - Implemented Search Controller and ran the filter function on the text
+    - No longer instantiated the found list to the overall list
+- 
+
+
 # legu
