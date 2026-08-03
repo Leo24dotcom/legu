@@ -30,7 +30,8 @@ class _ChampSelectScreenState extends State<ChampSelectScreen>{
 
   void sync(){
     list = leagueModel.filteredChampions;
-    found = list;
+    runFilter(searchController.text);
+    // found = list;
     setState((){});
   }
 

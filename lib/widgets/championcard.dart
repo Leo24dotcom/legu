@@ -11,7 +11,7 @@ class Championcard extends StatelessWidget{
   Widget build(BuildContext context){
     return GestureDetector(
       onTap: (){
-        debugPrint('You clicked on ${champion.name}');
+        debugPrint('You clicked on ${champion.id}');
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => ChampionDetail(champion: champion, version: version))

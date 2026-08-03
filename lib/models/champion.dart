@@ -1,7 +1,8 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-class Champion {
+//@HiveType(typeId: )
+class Champion { 
   final String id;
   final String key;
   final String name;

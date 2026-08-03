@@ -15,20 +15,26 @@ class LeagueModel extends ChangeNotifier{
   String? version;
 
   Future<void> loadChampions() async {
-  try {
-    version = await fetchLatestVersion();
-    champions = await fetchChampionList(version!);
-    items = (await fetchItems(version!))
-        .where((item) => item.isOnSummonersRift)
-        .where((item) => item.isPurchasable)
-        .toList();
-    notifyListeners();
+    try {
+      final latestVersion = await fetchLatestVersion();
+      if (latestVersion == version && champions.isNotEmpty) {
+        isLoading = false;
+        notifyListeners();
+        return;
+      }
+      version = latestVersion;
+      champions = await fetchChampionList(version!);
+      items = (await fetchItems(version!))
+          .where((item) => item.isOnSummonersRift)
+          .where((item) => item.isPurchasable)
+          .toList();
+      notifyListeners();
     } catch (e) {
       error = e.toString();
     } finally {
       isLoading = false;
       notifyListeners();
-    }
+    } 
   }
   Future<String> fetchLatestVersion() async {
     final uri = Uri.parse(
