@@ -35,16 +35,11 @@ Core Features
 <br>
 
 Troubleshooting
-- Search Bar issues
-  - Situation
-    - Search bar filter not working when switching class tabs
-    - When switching tabs, the filter would not be applied
-  - Root Cause analysis
-    - Would instantiate found list to the overall list every time search bar was used
-  - Solution
-    - Implemented Search Controller and ran the filter function on the text
-    - No longer instantiated the found list to the overall list
-- 
+- Clicking on champion cards calling api every time causing slower loading times
+- Situation
+  - Clicking on an individual champion card called both loadlore and lordabilities everytime even if flutter cached the details
+- Solution
+  - Implemented a check on the main api call that checked if said data was already loaded
 
 
 # legu
