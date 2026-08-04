@@ -1,4 +1,4 @@
-# league
+# League Library
 
 A League of Legends library containing information about champions, skins and items in the current version of the game.
 
@@ -9,7 +9,6 @@ A League of Legends library containing information about champions, skins and it
 <br>
 
 Team Size: Me(1)
-
 <br>
 
 Development Period: 7/23/26-7/30/26 1 week
@@ -42,4 +41,4 @@ Troubleshooting
   - Implemented a check on the main api call that checked if said data was already loaded
 
 
-# legu
+
